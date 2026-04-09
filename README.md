@@ -1,5 +1,5 @@
 🚀 Investo – Real-Time Stock Market Simulation Platform
-📌 Overview
+📌 Overview 
 Investo is a real-time stock market simulation backend system built using Spring Boot.
 It allows users to experience stock market behavior using live (free-tier) market data APIs without risking real money.
 The system focuses on secure authentication, real-time data simulation, and scalable backend architecture.
