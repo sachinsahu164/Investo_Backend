@@ -1,12 +1,12 @@
 package com.project.Investo.service.impl;
 
+
 import com.project.Investo.client.AlphaVantageClient;
 import com.project.Investo.dto.AlphaVantageResponseDTO;
 import com.project.Investo.dto.StockResponseDTO;
 import com.project.Investo.service.StockService;
 import com.project.Investo.simulation.PriceSimulationService;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,18 +14,25 @@ import java.util.List;
 public class StockServiceImpl implements StockService {
 
     private final AlphaVantageClient alphaVantageClient;
+
     private final PriceSimulationService simulationService;
 
     public StockServiceImpl(AlphaVantageClient alphaVantageClient,
                             PriceSimulationService simulationService) {
         this.alphaVantageClient = alphaVantageClient;
         this.simulationService = simulationService;
+
+
+    public StockServiceImpl(AlphaVantageClient alphaVantageClient) {
+        this.alphaVantageClient = alphaVantageClient;
+
     }
 
     @Override
     public StockResponseDTO getStockBySymbol(String symbol) {
 
         AlphaVantageResponseDTO response = alphaVantageClient.getStockQuote(symbol);
+
 
         // 🔥 Safety check
         if (response == null || response.getGlobalQuote() == null) {
@@ -49,6 +56,14 @@ public class StockServiceImpl implements StockService {
         double simulatedPrice = simulationService.getSimulatedPrice(apiSymbol);
 
         return new StockResponseDTO(apiSymbol, apiSymbol, simulatedPrice);
+
+        String apiSymbol = response.getGlobalQuote().getSymbol();
+        String priceStr = response.getGlobalQuote().getPrice();
+
+        double price = Double.parseDouble(priceStr);
+
+        return new StockResponseDTO(apiSymbol, apiSymbol, price);
+
     }
 
     @Override
@@ -68,4 +83,4 @@ public class StockServiceImpl implements StockService {
 
         return stockList;
     }
-}
+
