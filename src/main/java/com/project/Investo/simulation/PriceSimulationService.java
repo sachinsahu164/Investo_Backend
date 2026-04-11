@@ -54,4 +54,7 @@ public class PriceSimulationService {
             simulatePrice(symbol);
         }
     }
+    public Map<String, Double> getAllPrices() {
+        return displayPrices;
+    }
 }
