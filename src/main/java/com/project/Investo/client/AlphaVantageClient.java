@@ -1,8 +1,4 @@
 package com.project.Investo.client;
-
-
-
-
 import com.project.Investo.dto.AlphaVantageResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
