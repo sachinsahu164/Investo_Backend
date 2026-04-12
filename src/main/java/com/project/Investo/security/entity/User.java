@@ -26,4 +26,6 @@ public class User {
     private boolean mobileVerified;
 
     private String role;
+
+    private double balance;
 }
