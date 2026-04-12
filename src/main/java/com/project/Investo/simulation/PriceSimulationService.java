@@ -22,6 +22,11 @@ public class PriceSimulationService {
 
     // Get simulated price
     public double getSimulatedPrice(String symbol) {
+
+        if (symbol == null || symbol.isEmpty()) {
+            throw new RuntimeException("Symbol is NULL from request ❌");
+        }
+
         return displayPrices.getOrDefault(symbol, 0.0);
     }
 
@@ -53,5 +58,8 @@ public class PriceSimulationService {
         for (String symbol : displayPrices.keySet()) {
             simulatePrice(symbol);
         }
+    }
+    public Map<String, Double> getAllPrices() {
+        return displayPrices;
     }
 }
