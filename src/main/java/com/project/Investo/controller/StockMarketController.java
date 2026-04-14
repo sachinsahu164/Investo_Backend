@@ -1,5 +1,6 @@
 package com.project.Investo.controller;
 
+import com.project.Investo.dto.StockDetailDTO;
 import com.project.Investo.model.StockList;
 import com.project.Investo.service.StockMarketService;
 import org.springframework.web.bind.annotation.*;
@@ -24,5 +25,9 @@ public class StockMarketController {
     @GetMapping("/search")
     public List<StockList> searchStocks(@RequestParam String keyword) {
         return stockService.searchStocks(keyword);
+    }
+    @GetMapping("/{symbol}")
+    public StockDetailDTO getStockDetail(@PathVariable String symbol) {
+        return stockService.getStockDetail(symbol);
     }
 }

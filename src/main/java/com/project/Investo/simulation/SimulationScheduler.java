@@ -12,11 +12,15 @@ public class SimulationScheduler {
         this.simulationService = simulationService;
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 3000)
     public void runSimulation() {
 
         simulationService.simulateAllPrices();
 
         System.out.println("Simulation running...");
+    }
+    @Scheduled(fixedRate = 3000)
+    public void updateAll() {
+        simulationService.simulateAllPrices();
     }
 }
