@@ -21,7 +21,7 @@ public class PricePublisher {
         this.simulationService = simulationService;
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 3000)
     public void publishPrices() {
 
         Map<String, Double> prices = simulationService.getAllPrices();
