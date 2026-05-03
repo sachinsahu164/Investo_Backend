@@ -1,17 +1,16 @@
 package com.project.Investo.service.impl;
 
-
 import com.project.Investo.dto.response.PortfolioResponseDTO;
 import com.project.Investo.model.Portfolio;
+
 import com.project.Investo.repository.PortfolioRepository;
-import com.project.Investo.security.entity.User;
 import com.project.Investo.service.PortfolioService;
 import com.project.Investo.service.UserService;
 import com.project.Investo.simulation.PriceSimulationService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
@@ -31,29 +30,28 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Override
     public List<PortfolioResponseDTO> getUserPortfolio() {
 
-        User user = userService.getCurrentUser();
+        String email = userService.getCurrentUser().getEmail();
 
-        List<Portfolio> portfolioList = portfolioRepository.findByUser(user);
+        List<Portfolio> portfolios =
+                portfolioRepository.findByUserEmail(email);
 
-        List<PortfolioResponseDTO> responseList = new ArrayList<>();
+        return portfolios.stream().map(p -> {
 
-        for (Portfolio p : portfolioList) {
+            double currentPrice =
+                    simulationService.getSimulatedPrice(p.getStockSymbol());
 
-            double currentPrice = simulationService.getSimulatedPrice(p.getStockSymbol());
-
+            // ✅ PROFIT / LOSS CALCULATION
             double profitLoss =
                     (currentPrice - p.getAvgPrice()) * p.getQuantity();
 
-            PortfolioResponseDTO dto = new PortfolioResponseDTO();
-            dto.setStockSymbol(p.getStockSymbol());
-            dto.setQuantity(p.getQuantity());
-            dto.setAvgPrice(p.getAvgPrice());
-            dto.setCurrentPrice(currentPrice);
-            dto.setProfitLoss(profitLoss);
+            return new PortfolioResponseDTO(
+                    p.getStockSymbol(),
+                    p.getQuantity(),
+                    p.getAvgPrice(),
+                    currentPrice,
+                    profitLoss
+            );
 
-            responseList.add(dto);
-        }
-
-        return responseList;
+        }).collect(Collectors.toList());
     }
 }
