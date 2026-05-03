@@ -2,7 +2,8 @@ package com.project.Investo.controller;
 
 import com.project.Investo.dto.ProfileDTO;
 import com.project.Investo.dto.UpdateProfileDTO;
-import com.project.Investo.service.impl.ProfileService;
+
+import com.project.Investo.service.ProfileService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
