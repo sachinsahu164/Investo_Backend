@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
 
-    List<Portfolio> findByUser(User user);
-
     Optional<Portfolio> findByUserEmailAndStockSymbol(String email, String symbol);
+
+    List<Portfolio> findByUserEmail(String email);
 }
